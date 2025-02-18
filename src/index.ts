@@ -10,7 +10,8 @@ import {
   hexlify,
   concat,
   Transaction,
-  recoverAddress
+  recoverAddress,
+  getAddress
 } from 'ethers';
 import { KMS, SignCommand, SignCommandInput, GetPublicKeyCommand } from '@aws-sdk/client-kms';
 import { keccak256 } from 'ethers';
@@ -31,7 +32,7 @@ export class KMSSigner extends AbstractSigner {
     if (!this._address) {
       this._address = await this.getPublicKey();
     }
-    return this._address;
+    return getAddress(this._address);
   }
 
   async signMessage(message: string | Uint8Array): Promise<string> {
@@ -62,7 +63,7 @@ export class KMSSigner extends AbstractSigner {
     return new KMSSigner(this.keyId, provider);
   }
 
-  private async signDigest(digestHex: string): Promise<string> {
+  async signDigest(digestHex: string): Promise<string> {
     const digest = getBytes(digestHex);
     const address = await this.getAddress();
     
@@ -115,7 +116,7 @@ export class KMSSigner extends AbstractSigner {
     throw new Error('Failed to recover matching address');
   }
 
-  private async getPublicKey(): Promise<string> {
+  async getPublicKey(): Promise<string> {
     const response = await this.kms.send(new GetPublicKeyCommand({
       KeyId: this.keyId
     }));

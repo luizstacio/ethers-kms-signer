@@ -30,3 +30,5 @@ debug.log
 *.log
 *.tmp
 .tmp/
+
+run.sh

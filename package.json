@@ -5,7 +5,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "bun test"
+    "test": "bun test",
+    "debug": "bun run --inspect-wait src/safe.ts"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +14,8 @@
   "dependencies": {
     "@aws-sdk/client-kms": "^3.749.0",
     "@noble/curves": "^1.8.1",
+    "@safe-global/api-kit": "^2.5.9",
+    "@safe-global/protocol-kit": "^5.2.2",
     "asn1js": "^3.0.5",
     "ethers": "^6.13.5"
   },
